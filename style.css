@@ -1,0 +1,449 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+    scroll-behavior: smooth;
+}
+
+body {
+    background: #080d24;
+    color: white;
+}
+
+/* Navigation */
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 22px 7%;
+    background: #0d1430;
+}
+
+.navbar h2 span {
+    color: #f4bd55;
+}
+
+.nav-links a {
+    color: #ddd;
+    text-decoration: none;
+    margin: 0 12px;
+}
+
+.nav-links a:hover {
+    color: #f4bd55;
+}
+
+.nav-button {
+    background: #f4bd55;
+    color: #10162e;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 7px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* Hero */
+
+.hero {
+    min-height: 530px;
+    padding: 90px 10%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+    background: radial-gradient(circle at 80% 50%, #243b70, #080d24 65%);
+}
+
+.hero-content {
+    max-width: 600px;
+}
+
+.tag {
+    color: #f4bd55;
+    letter-spacing: 3px;
+    font-size: 13px;
+    margin-bottom: 20px;
+}
+
+.hero h1 {
+    font-size: 55px;
+    line-height: 1.2;
+    margin-bottom: 20px;
+}
+
+.hero h1 span {
+    color: #f4bd55;
+}
+
+.description {
+    color: #c1c8db;
+    line-height: 1.8;
+    margin-bottom: 30px;
+}
+
+/* SOS Button */
+
+.sos-button {
+    background: #e84141;
+    color: white;
+    border: 2px solid #ff7777;
+    padding: 20px 35px;
+    border-radius: 10px;
+    font-size: 19px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 0 20px #e8414160;
+    transition: 0.3s;
+}
+
+.sos-button:hover {
+    background: #c52d2d;
+    transform: scale(1.05);
+}
+
+.small-text {
+    color: #aab3c8;
+    margin-top: 20px;
+    font-size: 13px;
+}
+
+/* Hero Card */
+
+.hero-card {
+    background: #151f40;
+    border: 1px solid #35466e;
+    border-radius: 20px;
+    padding: 45px 35px;
+    text-align: center;
+    width: 280px;
+    box-shadow: 0 15px 40px #0005;
+}
+
+.medical-icon {
+    font-size: 75px;
+    color: #f4bd55;
+    margin-bottom: 15px;
+}
+
+.hero-card p {
+    color: #aebbd3;
+}
+
+.status {
+    margin-top: 25px;
+    background: #203c3c;
+    padding: 12px;
+    border-radius: 20px;
+    color: #76e3a5;
+}
+
+.dot {
+    display: inline-block;
+    height: 9px;
+    width: 9px;
+    background: #50db88;
+    border-radius: 50%;
+    margin-right: 7px;
+}
+
+/* Features */
+
+.features {
+    padding: 75px 8%;
+    text-align: center;
+}
+
+.features h2,
+.hospitals h2,
+.report-section h2 {
+    font-size: 30px;
+    margin-bottom: 12px;
+}
+
+.section-description {
+    color: #aebbd3;
+    margin-bottom: 40px;
+}
+
+.feature-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.feature-card {
+    background: #131d3b;
+    padding: 30px 20px;
+    border-radius: 12px;
+    border: 1px solid #28385e;
+    transition: 0.3s;
+}
+
+.feature-card:hover {
+    transform: translateY(-7px);
+    border-color: #f4bd55;
+}
+
+.feature-icon {
+    font-size: 40px;
+    margin-bottom: 20px;
+}
+
+.feature-card h3 {
+    color: #f4bd55;
+    margin-bottom: 12px;
+}
+
+.feature-card p {
+    color: #b7c1d5;
+    line-height: 1.6;
+    font-size: 14px;
+}
+
+/* Hospitals */
+
+.hospitals {
+    padding: 65px 10%;
+    background: #101832;
+    text-align: center;
+}
+
+.hospitals > p {
+    color: #aebbd3;
+    margin-bottom: 30px;
+}
+
+.hospital-card {
+    background: #1b294b;
+    border-radius: 12px;
+    padding: 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+    max-width: 650px;
+    margin: auto;
+}
+
+.hospital-card p {
+    color: #b7c1d5;
+    margin-top: 10px;
+}
+
+.hospital-status {
+    background: #3b4663;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 20px;
+}
+
+/* Report Form */
+
+.report-section {
+    padding: 70px 20px;
+    max-width: 650px;
+    margin: auto;
+}
+
+.report-section h2 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+form {
+    background: #131d3b;
+    padding: 30px;
+    border-radius: 15px;
+}
+
+label {
+    display: block;
+    margin: 18px 0 8px;
+    color: #f4bd55;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #35466e;
+    border-radius: 7px;
+    background: #0b1430;
+    color: white;
+    outline: none;
+}
+
+textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.location-row {
+    display: flex;
+    gap: 10px;
+}
+
+.location-button {
+    padding: 10px 15px;
+    background: #344c7c;
+    color: white;
+    border: none;
+    border-radius: 7px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.submit-button {
+    width: 100%;
+    padding: 15px;
+    margin-top: 25px;
+    border: none;
+    border-radius: 7px;
+    background: #e84141;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#result {
+    margin-top: 20px;
+    line-height: 1.8;
+    color: #76e3a5;
+    overflow-wrap: anywhere;
+}
+
+/* SOS Popup */
+
+.sos-modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.88);
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.sos-box {
+    background: #151f40;
+    border: 2px solid #e84141;
+    border-radius: 18px;
+    padding: 35px;
+    text-align: center;
+    max-width: 400px;
+    width: 100%;
+    box-shadow: 0 0 35px #e8414150;
+}
+
+.sos-icon {
+    font-size: 55px;
+}
+
+.sos-box h2 {
+    color: #ff5555;
+    margin: 15px 0;
+}
+
+.sos-box p {
+    color: #c1c8db;
+    margin: 12px 0;
+}
+
+.countdown-circle {
+    width: 100px;
+    height: 100px;
+    border: 5px solid #e84141;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px auto;
+}
+
+#countdown {
+    font-size: 45px;
+    color: #f4bd55;
+}
+
+.cancel-button,
+.help-button {
+    width: 100%;
+    padding: 15px;
+    margin-top: 12px;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.cancel-button {
+    background: #36b879;
+    color: white;
+}
+
+.help-button {
+    background: #e84141;
+    color: white;
+}
+
+/* Footer */
+
+footer {
+    background: #05091b;
+    padding: 35px 15px;
+    text-align: center;
+    color: #aebbd3;
+    line-height: 2;
+}
+
+footer h3 {
+    color: #f4bd55;
+}
+
+/* Responsive */
+
+@media (max-width: 800px) {
+    .navbar {
+        flex-wrap: wrap;
+        gap: 18px;
+    }
+
+    .nav-links {
+        width: 100%;
+        text-align: center;
+    }
+
+    .hero {
+        flex-direction: column;
+        text-align: center;
+        padding: 60px 7%;
+    }
+
+    .hero h1 {
+        font-size: 40px;
+    }
+
+    .feature-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 500px) {
+    .feature-container {
+        grid-template-columns: 1fr;
+    }
+
+    .location-row {
+        flex-direction: column;
+    }
+
+    .hospital-card {
+        gap: 15px;
+    }
+}
