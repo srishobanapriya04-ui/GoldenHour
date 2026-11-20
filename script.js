@@ -1,10 +1,11 @@
 
-let sosTimer;
+
+let sosTimer = null;
 let timeLeft = 10;
 let currentLocation = null;
 let sosActive = false;
 
-// Open accident report
+// Scroll to accident report
 function showReport() {
     document.getElementById("report").scrollIntoView({
         behavior: "smooth"
@@ -13,12 +14,13 @@ function showReport() {
 
 // Get GPS location
 function getLocation() {
+    const locationInput = document.getElementById("location");
+
     if (!navigator.geolocation) {
         alert("GPS is not supported by this browser.");
         return;
     }
 
-    const locationInput = document.getElementById("location");
     locationInput.value = "Getting location...";
 
     navigator.geolocation.getCurrentPosition(
@@ -34,12 +36,16 @@ function getLocation() {
         },
         function() {
             locationInput.value = "";
-            alert("Unable to get location. Allow location permission.");
+            alert("Unable to get location. Please allow GPS permission.");
+        },
+        {
+            enableHighAccuracy: true,
+            timeout: 10000
         }
     );
 }
 
-// Activate SOS
+// Activate SOS button
 function activateSOS() {
     if (sosActive) return;
 
@@ -52,12 +58,11 @@ function activateSOS() {
     modal.style.display = "flex";
 
     document.getElementById("countdown").innerText = timeLeft;
+    document.getElementById("sosStatus").innerText = "";
     document.getElementById("gpsStatus").innerText =
         "Getting your GPS location...";
 
-    document.getElementById("sosStatus").innerText = "";
-
-    // Automatically request GPS
+    // Automatically capture GPS
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
             function(position) {
@@ -71,7 +76,7 @@ function activateSOS() {
             },
             function() {
                 document.getElementById("gpsStatus").innerText =
-                    "GPS unavailable. Location was not captured.";
+                    "GPS unavailable. Please enter your location manually.";
             }
         );
     } else {
@@ -79,59 +84,69 @@ function activateSOS() {
             "GPS is not supported by this browser.";
     }
 
-    // Start countdown
+    // Start 10-second countdown
     sosTimer = setInterval(function() {
         timeLeft--;
 
         document.getElementById("countdown").innerText = timeLeft;
 
         if (timeLeft <= 0) {
-            clearInterval(sosTimer);
             sendSOS();
         }
-
     }, 1000);
 }
 
 // Cancel SOS
 function cancelSOS() {
     clearInterval(sosTimer);
-
+    sosTimer = null;
     sosActive = false;
 
     document.getElementById("sosModal").style.display = "none";
 
-    alert("Demo emergency alert cancelled.");
+    alert("SOS cancelled. This was a demo alert.");
 }
 
-// Confirm emergency
+// User confirms that help is needed
 function sendSOS() {
     clearInterval(sosTimer);
+    sosTimer = null;
+    sosActive = false;
 
-    document.getElementById("countdown").innerText = "!";
+    // Close SOS popup
+    document.getElementById("sosModal").style.display = "none";
 
-    const status = document.getElementById("sosStatus");
+    // Fill GPS location if available
+    const locationInput = document.getElementById("location");
 
     if (currentLocation) {
-        status.innerText =
-            "Demo SOS activated. GPS: " +
+        locationInput.value =
             currentLocation.latitude + ", " +
-            currentLocation.longitude +
-            ". No emergency service has been contacted.";
-    } else {
-        status.innerText =
-            "Demo SOS activated, but GPS location is unavailable. " +
-            "No emergency service has been contacted.";
+            currentLocation.longitude;
     }
 
-    sosActive = false;
+    // Show next-step message
+    const result = document.getElementById("result");
+
+    result.innerHTML = `
+        <h3>Emergency Help Requested</h3>
+        <p>Please complete the accident report below.</p>
+        <p>Your location: ${
+            currentLocation
+                ? escapeHTML(locationInput.value)
+                : "Location unavailable. Please enter it manually."
+        }</p>
+        <p><strong>Demo only:</strong> No hospital or emergency service has been contacted.</p>
+    `;
+
+    // Move to accident report form
+    showReport();
 }
 
 // Submit accident report
 document.getElementById("accidentForm").addEventListener(
     "submit",
     function(event) {
-
         event.preventDefault();
 
         const name = document.getElementById("name").value;
@@ -142,20 +157,24 @@ document.getElementById("accidentForm").addEventListener(
         const result = document.getElementById("result");
 
         result.innerHTML = `
-            <h3>Accident Report Created!</h3>
+            <h3>Accident Report Created Successfully!</h3>
             <p><strong>Name:</strong> ${escapeHTML(name)}</p>
             <p><strong>Location:</strong> ${escapeHTML(location)}</p>
             <p><strong>Severity:</strong> ${escapeHTML(severity)}</p>
             <p><strong>Details:</strong> ${escapeHTML(details || "Not provided")}</p>
-            <p>Demo report generated successfully.</p>
-            <p>This report has not been sent to a hospital or emergency service.</p>
+            <p>Your demo accident report has been created.</p>
+            <p><strong>Note:</strong> This report has not been sent to a hospital or emergency service.</p>
         `;
+
+        result.scrollIntoView({
+            behavior: "smooth"
+        });
     }
 );
 
 // Protect displayed user input
 function escapeHTML(value) {
-    return value.replace(/[&<>"']/g, function(character) {
+    return String(value).replace(/[&<>"']/g, function(character) {
         return {
             "&": "&amp;",
             "<": "&lt;",
@@ -165,3 +184,4 @@ function escapeHTML(value) {
         }[character];
     });
 }
+
