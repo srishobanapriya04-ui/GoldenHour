@@ -5,14 +5,14 @@ let timeLeft = 10;
 let currentLocation = null;
 let sosActive = false;
 
-// Scroll to accident report
+// Scroll to accident report when needed
 function showReport() {
     document.getElementById("report").scrollIntoView({
         behavior: "smooth"
     });
 }
 
-// Get GPS location
+// Get GPS location manually
 function getLocation() {
     const locationInput = document.getElementById("location");
 
@@ -45,7 +45,7 @@ function getLocation() {
     );
 }
 
-// Activate SOS button
+// Activate SOS
 function activateSOS() {
     if (sosActive) return;
 
@@ -62,7 +62,7 @@ function activateSOS() {
     document.getElementById("gpsStatus").innerText =
         "Getting your GPS location...";
 
-    // Automatically capture GPS
+    // Capture GPS location
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
             function(position) {
@@ -76,7 +76,7 @@ function activateSOS() {
             },
             function() {
                 document.getElementById("gpsStatus").innerText =
-                    "GPS unavailable. Please enter your location manually.";
+                    "GPS unavailable. Please enter location manually.";
             }
         );
     } else {
@@ -84,14 +84,18 @@ function activateSOS() {
             "GPS is not supported by this browser.";
     }
 
-    // Start 10-second countdown
+    // Start countdown
     sosTimer = setInterval(function() {
         timeLeft--;
 
         document.getElementById("countdown").innerText = timeLeft;
 
         if (timeLeft <= 0) {
-            sendSOS();
+            clearInterval(sosTimer);
+            sosTimer = null;
+
+            document.getElementById("sosStatus").innerText =
+                "Countdown finished. Press I NEED HELP to call 112.";
         }
     }, 1000);
 }
@@ -104,46 +108,22 @@ function cancelSOS() {
 
     document.getElementById("sosModal").style.display = "none";
 
-    alert("SOS cancelled. This was a demo alert.");
+    alert("SOS cancelled.");
 }
 
-// User confirms that help is needed
+// I NEED HELP button
 function sendSOS() {
     clearInterval(sosTimer);
     sosTimer = null;
     sosActive = false;
 
-    // Close SOS popup
     document.getElementById("sosModal").style.display = "none";
 
-    // Fill GPS location if available
-    const locationInput = document.getElementById("location");
-
-    if (currentLocation) {
-        locationInput.value =
-            currentLocation.latitude + ", " +
-            currentLocation.longitude;
-    }
-
-    // Show next-step message
-    const result = document.getElementById("result");
-
-    result.innerHTML = `
-        <h3>Emergency Help Requested</h3>
-        <p>Please complete the accident report below.</p>
-        <p>Your location: ${
-            currentLocation
-                ? escapeHTML(locationInput.value)
-                : "Location unavailable. Please enter it manually."
-        }</p>
-        <p><strong>Demo only:</strong> No hospital or emergency service has been contacted.</p>
-    `;
-
-    // Move to accident report form
-    showReport();
+    // Open emergency helpline dialler
+    window.location.href = "tel:112";
 }
 
-// Submit accident report
+// Submit accident report separately
 document.getElementById("accidentForm").addEventListener(
     "submit",
     function(event) {
@@ -163,7 +143,7 @@ document.getElementById("accidentForm").addEventListener(
             <p><strong>Severity:</strong> ${escapeHTML(severity)}</p>
             <p><strong>Details:</strong> ${escapeHTML(details || "Not provided")}</p>
             <p>Your demo accident report has been created.</p>
-            <p><strong>Note:</strong> This report has not been sent to a hospital or emergency service.</p>
+            <p><strong>Note:</strong> This report has not been sent to emergency services.</p>
         `;
 
         result.scrollIntoView({
@@ -172,7 +152,7 @@ document.getElementById("accidentForm").addEventListener(
     }
 );
 
-// Protect displayed user input
+// Protect user input
 function escapeHTML(value) {
     return String(value).replace(/[&<>"']/g, function(character) {
         return {
@@ -184,4 +164,5 @@ function escapeHTML(value) {
         }[character];
     });
 }
+
 
